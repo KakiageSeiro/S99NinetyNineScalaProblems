@@ -1,4 +1,5 @@
-import S99NinetyNineScalaProblems.P02
+package S99NinetyNineScalaProblems
+
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
