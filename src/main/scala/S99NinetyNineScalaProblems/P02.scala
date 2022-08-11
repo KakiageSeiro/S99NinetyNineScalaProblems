@@ -1,6 +1,5 @@
 package S99NinetyNineScalaProblems
 
-import java.lang.System.console
 import scala.annotation.tailrec
 
 // 最後から2番目の要素を取得する
