@@ -15,7 +15,7 @@ object P01 {
   @tailrec // 再起になってないときにコンパイルエラーにしてくれる
   def lastRecursive[A](ls: List[A]): A = ls match {
     case h :: Nil  => h // 終了条件。要素が無い場合を表す
-    case _ :: tail => lastRecursive(tail) // 再起呼び出し。上記以外を表す
+    case _ :: tail => lastRecursive(tail) // 再起呼び出し。上記以外を表す。_は初期値かワイルドカードだと思う
     case _         => throw new NoSuchElementException // Listの要素がそもそも無い場合
   }
 }
