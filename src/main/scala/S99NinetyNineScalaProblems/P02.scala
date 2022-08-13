@@ -29,17 +29,15 @@ object P02 {
 
   // 上を再起でやるやつ
   def lastNthRecursive[A](n: Int, ls: List[A]): A = {
-
-
     def lastNthR(count: Int, resultList: List[A], curList: List[A]): A =
       curList match {
-        case Nil if count > 0 => throw new NoSuchElementException //
+        case Nil if count > 0 => throw new NoSuchElementException // count > 0部分はパターンガードと呼ぶ。条件をより具体的に出来る
         case Nil              => resultList.head // 先頭を返す。終了条件
-        case _ :: tail        => //
+        case _ :: a        => // 先頭より後ろの要素が一致する場合、curList.tailを適用した結果が変数"tail"に拘束されてる？でも変数"tail"をaにリネームしてもtailの処理は実行されてるっぽいので変数名を利用してメソッド呼び出しをしているわけではなさそう
           lastNthR(
             count - 1,
             if (count > 0) resultList else resultList.tail, // countがなくなったら先頭要素を削除
-            tail
+            a
           )
       }
 
