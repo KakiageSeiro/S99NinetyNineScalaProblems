@@ -9,4 +9,8 @@ class P04Spec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(P04.length(List(1, 1, 2, 3, 5, 8)) == 6)
   }
 
+  "tatamikomi" should "要素数を取得できる" in {
+    assert(P04.tatamikomi(List(1, 1, 2, 3, 5, 8)) == 6)
+  }
+
 }
