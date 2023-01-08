@@ -1,7 +1,5 @@
 package sandbox
 
-import scala.annotation.tailrec
-
 object 九九でyield理解 {
 
   // 九九の段をSepでもらったのでそれを一行のStringにする
