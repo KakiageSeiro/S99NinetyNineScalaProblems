@@ -1,4 +1,4 @@
-package sandbox
+package sandbox.忘れそうな構文
 
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams

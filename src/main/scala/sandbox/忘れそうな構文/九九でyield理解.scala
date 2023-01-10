@@ -1,4 +1,4 @@
-package sandbox
+package sandbox.忘れそうな構文
 
 object 九九でyield理解 {
 
