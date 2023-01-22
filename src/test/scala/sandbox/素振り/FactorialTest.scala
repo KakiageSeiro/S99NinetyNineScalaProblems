@@ -106,4 +106,24 @@ class FactorialTest extends AnyFlatSpec with Diagrams with TimeLimits {
   "末尾再起で50000の階乗は" should "桁数やばいけどこけない" in {
     assert(Factorial.再起で階乗_改(50000, 1) == BigDecimal("3.347320509597144836915476094071474E+213236"))
   }
+
+
+  "練習用たし算関数" should "hogehoge" in {
+    // resultには初期値という意味もあることになるかも。排除したければ再起ヘルパー関数をつくるとかかな
+    assert(Factorial.一からelementまでを全て足す(3, 0) == 6)
+
+    // 呼出しごとの変数
+    // element=3, result=0, 戻り値=3
+    // element=2, result=3, 戻り値=5
+    // element=1, result=5, 戻り値=6
+  }
+
+  "初期値を呼出し側に書かせたくない" should "hogehoge" in {
+    // resultには初期値という意味もあることになるかも。排除したければ再起ヘルパー関数をつくるとかかな
+    assert(Factorial.一からelementまでを全て足す関数を初期値0で始める(3) == 6)
+  }
+
+  "for文と同じ処理の流れになる再起" should "いまさら気付いたけど日本語関数名にするとDiagramsで良い感じ結果が出る矢印部分がずれるぞ！" in {
+    assert(Factorial.forと同じようにiがインクリメントしていく処理の流れの足し算(1, 3, 0) == 6)
+  }
 }
