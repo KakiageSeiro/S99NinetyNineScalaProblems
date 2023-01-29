@@ -101,10 +101,12 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
 
   "マージソート" should "ちゃんとソートできる" in {
     def stringの比較方法(x: String, y: String): Boolean = x < y
+
     assert(コレクション.msort(stringの比較方法)(List("a", "b", "c", "d", "e")) === List("a", "b", "c", "d", "e"))
     assert(コレクション.msort(stringの比較方法)(List("d", "b", "a", "e", "c")) === List("a", "b", "c", "d", "e"))
 
     def intの比較方法(x: Int, y: Int): Boolean = x < y
+
     val intの比較方法を第一級として使うこともできるぞ = intの比較方法 _
 
     // カリー化されてるので型パラメータをIntに限定したやつを作り出したり
@@ -117,6 +119,7 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
 
     // カリー化されていると別の用途の関数を新たにつくりだして、それに別名をつけられる
     def intの比較方法_逆順(x: Int, y: Int): Boolean = x > y
+
     val int用のマージソート_逆順 = コレクション.msort(intの比較方法_逆順) _
     assert(int用のマージソート_逆順(List(3, 2, 1, 10, 5, 6, 9, 8, 7, 4)) === List(10, 9, 8, 7, 6, 5, 4, 3, 2, 1))
   }
@@ -145,5 +148,112 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.mapとflatMapをfor式で良い感じに(None) === None)
   }
 
+  "flatMapでタプル作る" should "できる" in {
+    assert(コレクション.flatMapでタプル作る() === List((2, 1), (3, 1), (3, 2), (4, 1), (4, 2), (4, 3)))
+  }
 
+  "for式でタプル作る" should "できる" in {
+    assert(コレクション.for式でタプル作る() === List((2, 1), (3, 1), (3, 2), (4, 1), (4, 2), (4, 3)))
+  }
+
+
+  "filterで絞る" should "できる" in {
+    assert(コレクション.filterで絞る(List(1, 2, 3, 4, 5)) === List(2, 4))
+  }
+
+  "partitionで絞る" should "できる" in {
+    assert(コレクション.partitionで絞った結果と絞らなかった結果をタプルで返す(List(1, 2, 3, 4, 5)) === (List(2, 4), List(1, 3, 5)))
+  }
+
+  "findで最初に見つかった要素を返す" should "できる" in {
+    assert(コレクション.findで最初に見つかった要素を返す(List(1, 2, 3, 4, 5)) === Some(2))
+    assert(コレクション.findで最初に見つかった要素を返す(List(1, 3, 5)) === None)
+  }
+
+  "takeWhileで" should "先頭から条件満たさない要素までを取る" in {
+    assert(コレクション.takeWhileで先頭から条件満たさない要素までを取る(List(1, 2, 3, 1, 2)) === List(1, 2))
+  }
+
+  "dropWhileで" should "先頭から条件満たさない要素までを捨てる" in {
+    assert(コレクション.dropWhileで先頭から条件満たさない要素までを捨てる(List(1, 2, 3, 1, 2)) === List(3, 1, 2))
+  }
+
+  "spanで" should "takeWhileの結果とdropWhileの結果をタプルで返す" in {
+    assert(コレクション.spanでtakeWhileの結果とdropWhileの結果をタプルで返す(List(1, 2, 3, 1, 2)) === (List(1, 2), List(3, 1, 2)))
+  }
+
+  "forallで" should "全ての要素が条件を満たすか" in {
+    assert(コレクション.forallで全ての要素が条件を満たすか(List(1, 2)) === true)
+    assert(コレクション.forallで全ての要素が条件を満たすか(List(1, 2, 3)) === false)
+    assert(コレクション.forallで全ての要素が条件を満たすか(List(1, 2, 3, 4, 5, 6)) === false)
+    // 空リストはtrueだぞ！
+    // forallの実装は、forまわしつつ"""満たさなかった"""時点でreturn falseしてるから
+    assert(コレクション.forallで全ての要素が条件を満たすか(List()) === true)
+  }
+
+  "existsで" should "少なくとも1つの要素が条件を満たすか" in {
+    assert(コレクション.existsで少なくとも1つの要素が条件を満たすか(List(1, 2)) === true)
+    assert(コレクション.existsで少なくとも1つの要素が条件を満たすか(List(1, 2, 3)) === true)
+    assert(コレクション.existsで少なくとも1つの要素が条件を満たすか(List(1, 2, 3, 4, 5, 6)) === true)
+    assert(コレクション.existsで少なくとも1つの要素が条件を満たすか(List(3, 5)) === false)
+    // こっちは空リストでfalseだぞ！
+    // existsの実装は、forまわしつつ"""満たした"""時点でreturn trueしてるから
+    assert(コレクション.existsで少なくとも1つの要素が条件を満たすか(List()) === false)
+  }
+
+  "foldLeftで" should "左から順に畳み込む" in {
+    assert(コレクション.foldLeftで畳み込み(List(1, 2, 3, 4, 5)) === 15)
+  }
+
+  "foldRightで" should "右から順に畳み込む" in {
+    assert(コレクション.foldRightで畳み込み(List(1, 2, 3, 4, 5)) === 15)
+  }
+
+  "foldRightで効率の良いListのflatten" should "できる" in {
+    assert(コレクション.foldRightで効率の良いListのflatten(List(List("a"), List("b"), List("c"), List("d"))) === List("a", "b", "c", "d"))
+    assert(コレクション.foldRightで効率の良いListのflatten(List(List("a"), List("b", "b", "b"), List("c", "c", "c", "c", "c", "c", "c", "c"))) === List("a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "c", "c"))
+  }
+
+  "sortWithで" should "条件に従ってソートできる" in {
+    assert(コレクション.sortWithでソート(List(5, 4, 3, 2, 1)) === List(1, 2, 3, 4, 5))
+    assert(コレクション.sortWithでソート(List(5, 2, 1, 4, 3)) === List(1, 2, 3, 4, 5))
+  }
+
+  "fillで" should "fillで同じ値のListを作る" in {
+    assert(コレクション.fillで同じ値のListを作る(5, "a") === List("a", "a", "a", "a", "a"))
+  }
+
+  "fillで" should "fillで同じ値のListを複数作る" in {
+    assert(コレクション.fillで同じ値のListを複数作る(5, "a", 3) === List(List("a", "a", "a", "a", "a"), List("a", "a", "a", "a", "a"), List("a", "a", "a", "a", "a")))
+  }
+
+  "tabulateで" should "関数計算結果のListを作る" in {
+    // nは0からインクリメントされていってる？
+    assert(コレクション.tabulateで関数計算結果のListを作る(5, n => n + n) === List(0, 2, 4, 6, 8))
+    assert(コレクション.tabulateで関数計算結果のListを作る(5, n => n * n) === List(0, 1, 4, 9, 16))
+  }
+
+  "tabulateで" should "関数計算結果の複数Listを作る" in {
+    assert(コレクション.tabulateで関数計算結果の複数Listを作る(5,  3) === List(List(0, 0, 0, 0, 0), List(0, 1, 2, 3, 4), List(0, 2, 4, 6, 8)))
+    // (Listの数を順次もらう* Listの要素数を順次もらう)のようになってる
+    // 最初のListの最初の要素の計算  (0 * 0)
+    // 最初のListの2番目の要素の計算 (0 * 1)
+    // 最初のListの3番目の要素の計算 (0 * 2)
+    // 最初のListの4番目の要素の計算 (0 * 3)
+    // 最初のListの5番目の要素の計算 (0 * 4)
+    // 2番目のListの最初の要素の計算 (1 * 0)
+    // 2番目のListの2番目の要素の計算(1 * 1)
+    // 2番目のListの3番目の要素の計算(1 * 2)
+    // 2番目のListの4番目の要素の計算(1 * 3)
+    // 2番目のListの5番目の要素の計算(1 * 4)
+    // 3番目のListの最初の要素の計算 (2 * 0)
+    // 3番目のListの2番目の要素の計算(2 * 1)
+    // 3番目のListの3番目の要素の計算(2 * 2)
+    // 3番目のListの4番目の要素の計算(2 * 3)
+    // 3番目のListの5番目の要素の計算(2 * 4)
+  }
+
+  "concatで" should "Listを連結" in {
+    assert(コレクション.concatでListを連結(List(1,2,3),List(4,5)) === List(1,2,3,4,5))
+  }
 }
