@@ -236,7 +236,7 @@ object コレクション {
     List.concat(list1, list2)
   }
 
-  def lazyzipでzipの後続で操作したい場合に生成される中間リストを作らない(list1: List[Int], list2: List[Int]): List[(Int)] = {
+  def lazyZipでzipの後続で操作したい場合に生成される中間リストを作らない(list1: List[Int], list2: List[Int]): List[(Int)] = {
     // zipでの問題その1:zipの後続で操作したい場合に生成される中間リストがメモリ使う
     // zipでの問題その2:mapに渡す関数がタプルなのでプレースホルダー構文(_のこと)が使えない(無理に_使いたい動機がないような？)(なぜ出来ないかは型推論ができないから？)
     // 例1:

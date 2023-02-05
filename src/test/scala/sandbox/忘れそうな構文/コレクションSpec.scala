@@ -258,6 +258,6 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
   }
 
   "lazyzipでzipの後続で操作したい場合に生成される中間リストを作らない" should "けど中間リストができているかどうかはテストできないので呼ぶだけ" in {
-    assert(コレクション.lazyzipでzipの後続で操作したい場合に生成される中間リストを作らない(List(1,2,3),List(4,5)) === List(5, 7))
+    assert(コレクション.lazyZipでzipの後続で操作したい場合に生成される中間リストを作らない(List(1,2,3),List(4,5)) === List(5, 7))
   }
 }
