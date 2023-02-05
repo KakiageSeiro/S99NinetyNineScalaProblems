@@ -256,4 +256,8 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
   "concatで" should "Listを連結" in {
     assert(コレクション.concatでListを連結(List(1,2,3),List(4,5)) === List(1,2,3,4,5))
   }
+
+  "lazyzipでzipの後続で操作したい場合に生成される中間リストを作らない" should "けど中間リストができているかどうかはテストできないので呼ぶだけ" in {
+    assert(コレクション.lazyzipでzipの後続で操作したい場合に生成される中間リストを作らない(List(1,2,3),List(4,5)) === List(5, 7))
+  }
 }
