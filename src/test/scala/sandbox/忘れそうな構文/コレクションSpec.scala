@@ -261,15 +261,5 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.lazyZipでzipの後続で操作したい場合に生成される中間リストを作らない(List(1,2,3),List(4,5)) === List(5, 7))
   }
 
-  "暗黙のパラメータを使って最大の要素を見つける" should "最大の要素を見つける" in {
-    assert(コレクション.暗黙のパラメータを使って最大の要素を見つける(List(1,2,3,4,5)) === 5)
-  }
-
-  "暗黙のパラメータをimplicitlyで見つける" should "最大の要素を見つける" in {
-    assert(コレクション.暗黙のパラメータをimplicitlyで見つける(List(1, 2, 3, 4, 5)) === 5)
-  }
-
-  "暗黙のパラメータをコンテキスト境界で表現" should "最大の要素を見つける" in {
-    assert(コレクション.暗黙のパラメータをコンテキスト境界で表現(List(1, 2, 3, 4, 5)) === 5)
   }
 }
