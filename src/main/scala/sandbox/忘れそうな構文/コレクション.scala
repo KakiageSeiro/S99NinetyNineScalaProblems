@@ -250,5 +250,19 @@ object コレクション {
       .map(_ + _)
   }
 
+  abstract class Fruit
+  class Apple extends Fruit
+  class Orange extends Fruit
+  def apple型のListの先頭にOrange型を追加(orange: Orange): List[Fruit] = {
+    val appleList: List[Apple] = new Apple :: Nil
+    val fruitList:List[Fruit] = orange :: appleList
+    // ::は:で終わる名称なので、appleListがレシーバーになる。のでList型のメソッドである。
+    // List型の::の定義
+    // def :: [B >: A](elem: B): List[B] =  new ::(elem, this)
+    // BがFruitでAはApple(すでにインスタンス化されているListの型)
+    // 右辺はListの中で定義されているcase classで第一引数にhead、第二引数にtailを取る
+    // でもこれでなんでFruitのListができるのかよくわからない。
+
+    fruitList
   }
 }

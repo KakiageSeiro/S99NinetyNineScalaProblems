@@ -3,6 +3,7 @@ package sandbox.忘れそうな構文
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
+import sandbox.忘れそうな構文.コレクション.Orange
 
 class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
   "headで" should "先頭とれる" in {
@@ -261,5 +262,8 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.lazyZipでzipの後続で操作したい場合に生成される中間リストを作らない(List(1,2,3),List(4,5)) === List(5, 7))
   }
 
+  "apple型のListにOrange型のListを追加" should "Fruit型のListになる" in {
+    val result = コレクション.apple型のListの先頭にOrange型を追加(new Orange)
+    assert(result.isInstanceOf[List[コレクション.Fruit]])
   }
 }
