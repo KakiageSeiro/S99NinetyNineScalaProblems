@@ -1,5 +1,6 @@
 package sandbox.忘れそうな構文
 
+import scala.collection.mutable.ListBuffer
 import scala.reflect.ClassTag
 
 object コレクション {
@@ -147,6 +148,11 @@ object コレクション {
     list.filter(_ % 2 == 0)
   }
 
+  // 中間リストをつくらないみたい。
+  def withFilterで絞る(list: List[Int]): List[Int] = {
+    list.withFilter(_ % 2 == 0).map(_ * 3)
+  }
+
   def partitionで絞った結果と絞らなかった結果をタプルで返す(list: List[Int]): (List[Int], List[Int]) = {
     list.partition(_ % 2 == 0)
   }
@@ -264,5 +270,23 @@ object コレクション {
     // でもこれでなんでFruitのListができるのかよくわからない。
 
     fruitList
+  }
+
+  def incAll(list: List[Int]): List[Int] = {
+    // 末尾再起になってないやりかた
+//    list match{
+//      case Nil => Nil
+//      case x :: xs => x + 1 :: incAll(xs)
+//    }
+
+    // forでやる。resultの大きさがだんだん増えていくと、List結合の計算量も増えていく
+//    var result = List[Int]()
+//    for (x <- list) result = result ::: List(x + 1)
+//    result
+
+    // O(n)でできそうな実装
+    val buffer = new ListBuffer[Int]
+    for (x <- list) buffer += x + 1
+    buffer.toList
   }
 }

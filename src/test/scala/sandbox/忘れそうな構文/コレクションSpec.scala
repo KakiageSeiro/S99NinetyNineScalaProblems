@@ -162,6 +162,10 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.filterで絞る(List(1, 2, 3, 4, 5)) === List(2, 4))
   }
 
+  "withFilterで絞る" should "できる" in {
+    assert(コレクション.withFilterで絞る(List(1, 2, 3, 4, 5)) === List(6, 12))
+  }
+
   "partitionで絞る" should "できる" in {
     assert(コレクション.partitionで絞った結果と絞らなかった結果をタプルで返す(List(1, 2, 3, 4, 5)) === (List(2, 4), List(1, 3, 5)))
   }
@@ -266,4 +270,31 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     val result = コレクション.apple型のListの先頭にOrange型を追加(new Orange)
     assert(result.isInstanceOf[List[コレクション.Fruit]])
   }
+
+  "incAllで" should "Listの要素をすべてインクリメント" in {
+    assert(コレクション.incAll(List(1,2,3)) === List(2,3,4))
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
