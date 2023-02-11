@@ -1,5 +1,6 @@
 package sandbox.忘れそうな構文
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 import scala.reflect.ClassTag
 
@@ -327,6 +328,29 @@ object コレクション {
     }
 
     クイーンが置ける場所(n)
+  }
+
+  def 重複排除(list: List[Int]): List[Int] = list match {
+    case Nil => list
+    case checkTarget :: tail => checkTarget :: 重複排除(tail.filter(_ != checkTarget))
+  }
+
+  def 重複排除を末尾再起にしてみる(list: List[Int]): List[Int] = {
+    // checkTargetと再起関数の結果を結合する部分がcallstackを使っているので、再帰呼出し時にcheckTargetを渡す。
+    // というわけでcheckTargetのリストを作る。
+    val checkTargetList = new ListBuffer[Int] // 先頭に要素追加すると順序が変わってしまう。しかし末尾追加は計算量が上がっていくのでListBufferを使う。
+
+    @tailrec
+    def 本体(checkTargetList: ListBuffer[Int], list: List[Int]): List[Int] = list match {
+      case Nil => checkTargetList.toList
+      case checkTarget :: tail => 本体(
+        checkTargetList += checkTarget, // Listの末尾に追加
+        tail.filter(_ != checkTarget)
+      )
+    }
+
+    // それを再起関数本体に渡す。この関数はヘルパー関数みたいな感じになる。
+    本体(checkTargetList, list)
   }
 
 }
