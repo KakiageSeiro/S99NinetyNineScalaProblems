@@ -275,26 +275,15 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.incAll(List(1,2,3)) === List(2,3,4))
   }
 
+  "for式の文法" should "できる" in {
+    assert(コレクション.for式の文法(Some(1)) === None)
+    assert(コレクション.for式の文法(Some(2)) === Some(4))
+    assert(コレクション.for式の文法(Some(3)) === None)
+    assert(コレクション.for式の文法(None) === None)
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  "Nクイーン問題" should "いいかんじ" in {
+    assert(コレクション.nクイーン問題(4) === List(List((4,3), (3,1), (2,4), (1,2)), List((4,2), (3,4), (2,1), (1,3))))
+  }
 
 }

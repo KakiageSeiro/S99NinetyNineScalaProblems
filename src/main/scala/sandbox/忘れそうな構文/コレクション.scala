@@ -289,4 +289,44 @@ object コレクション {
     for (x <- list) buffer += x + 1
     buffer.toList
   }
+
+  def for式の文法(optionalInt: Option[Int]): Option[Int] = {
+    def map向け(i: Int): Int = i + 1
+    def flatMap向け(i: Int): Option[Int] = Option(i + 1)
+
+    for {
+      i <- optionalInt // ジェネレータという。seqから一つ取る(2個書くと2重ループ?)・文脈を外すとか。
+      j = map向け(i) // 定義という。
+      k <- flatMap向け(j) // ジェネレータで文脈を外してる。
+      if(k % 2 == 0) // フィルターという。
+    } yield k
+  }
+
+  def nクイーン問題(n: Int): List[List[(Int, Int)]] = {
+    def クイーンが置ける場所(k: Int): List[List[(Int, Int)]] = {
+      if (k == 0) List(Nil)
+      else {
+        for {
+          現在rowより上のクイーン置ける場所 <- クイーンが置ける場所(k - 1)
+          column <- 1 to n // クイーンが置けるかも知れないカラム
+          // この変数名を日本語にするとコンパイルエラー(Identifiers enclosed in backticks are not pattern variables but match the value in scope.)になる。よくわからない。
+          queen = (k, column)
+          if is置ける(queen, 現在rowより上のクイーン置ける場所)
+        } yield queen :: 現在rowより上のクイーン置ける場所
+      }
+    }
+
+    def is置ける(置いてみる場所: (Int, Int), すでに置いてある場所リスト: List[(Int, Int)]): Boolean = {
+      すでに置いてある場所リスト.forall { すでに置いてある場所 =>
+        val 同じ行にクイーンがいない = すでに置いてある場所._1 != 置いてみる場所._1
+        val 同じ列にクイーンがいない = すでに置いてある場所._2 != 置いてみる場所._2
+        val 斜めにクイーンがいない = (すでに置いてある場所._1 - 置いてみる場所._1).abs != (すでに置いてある場所._2 - 置いてみる場所._2).abs
+
+        同じ行にクイーンがいない && 同じ列にクイーンがいない && 斜めにクイーンがいない
+      }
+    }
+
+    クイーンが置ける場所(n)
+  }
+
 }
