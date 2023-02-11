@@ -337,8 +337,11 @@ object コレクション {
 
   def 重複排除を末尾再起にしてみる(list: List[Int]): List[Int] = {
     // checkTargetと再起関数の結果を結合する部分がcallstackを使っているので、再帰呼出し時にcheckTargetを渡す。
+
     // というわけでcheckTargetのリストを作る。
-    val checkTargetList = new ListBuffer[Int] // 先頭に要素追加すると順序が変わってしまう。しかし末尾追加は計算量が上がっていくのでListBufferを使う。
+    // 先頭に要素追加すると順序が変わってしまう。しかし末尾追加は計算量が上がっていくのでListBufferを使う。
+    // Queueでもいいかも
+    val checkTargetList = new ListBuffer[Int]
 
     @tailrec
     def 本体(checkTargetList: ListBuffer[Int], list: List[Int]): List[Int] = list match {
