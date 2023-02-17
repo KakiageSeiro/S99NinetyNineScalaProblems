@@ -26,3 +26,30 @@ object Domain {
   def unapplySeq(whole: String): Option[Seq[String]] =
     Some(whole.split("\\.").reverse)
 }
+
+// ユーザー定義型を返せる抽出子
+object TrueEmailAddressUser {
+  class FullNameUser(val user: String) {
+    // パターンマッチが成功したかどうかをBooleanで表すisEmpty
+    // Emptyの条件(このクラスにマッチしない条件)を書くことに注意
+    def isEmpty: Boolean = !user.contains(".") // .で区切りがあったらフルネームということにする
+    // 分解後の値を指定するget
+    def get: String = user
+  }
+
+  // ユーザー定義型を返すよ
+  def unapply(target: String): FullNameUser = new FullNameUser(target)
+}
+
+object TrueEmailAddressUser2 {
+  class FullNameUser(val user: String) {
+    def isEmpty: Boolean = !user.contains(".")
+    def get: FullNameUser = this
+
+    // ここは任意の名前(firstNameとかにしたかった)にできないので注意
+    def _1: String = user.split("\\.")(0)
+    def _2: String = user.split("\\.")(1)
+  }
+
+  def unapply(target: String): FullNameUser = new FullNameUser(target)
+}

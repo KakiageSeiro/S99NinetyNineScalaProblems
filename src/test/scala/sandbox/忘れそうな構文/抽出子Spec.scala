@@ -3,7 +3,7 @@ package sandbox.忘れそうな構文
 import org.scalatest.concurrent.TimeLimits
 import org.scalatest.diagrams.Diagrams
 import org.scalatest.flatspec.AnyFlatSpec
-import sandbox.忘れそうな構文.抽出子.{Domain, EMail, UpperCase}
+import sandbox.忘れそうな構文.抽出子.{Domain, EMail, TrueEmailAddressUser, TrueEmailAddressUser2, UpperCase}
 
 class 抽出子Spec extends AnyFlatSpec with Diagrams with TimeLimits {
   "unapplyで" should "分解" in {
@@ -67,4 +67,33 @@ class 抽出子Spec extends AnyFlatSpec with Diagrams with TimeLimits {
     }
   }
 
+  "ユーザー定義型が返ってくる抽出子" should "パターンとして使える" in {
+    val str = "kakiage.seiro"
+    str match {
+      case TrueEmailAddressUser(str) => assert(str === "kakiage.seiro")
+      case _ => fail()
+    }
+  }
+
+  "ユーザー定義型がタプルで返ってくる抽出子" should "パターンとして使える" in {
+    val str = "kakiage.seiro"
+    str match {
+      case TrueEmailAddressUser2(first, last) => assert(first === "kakiage" && last === "seiro")
+      case _ => fail()
+    }
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
