@@ -13,8 +13,8 @@ class P11Spec extends AnyFlatSpec with Diagrams with TimeLimits {
 
     assert(after.length == 3)
     assert(after(0) == (2, 'a'))
-    assert(after(1) == ('b'))
-    assert(after(2) == ('c'))
+    assert(after(1) == 'b')
+    assert(after(2) == 'c')
   }
 
   "runLength" should "連続した重複数が数字になってる2" in {
