@@ -189,8 +189,18 @@ object コレクション {
     list.foldLeft(0)(_ + _)
   }
 
+  def foldLeftを記号で(list: List[Int]): Int = {
+    // scalaVersion := "2.13.8"では非推奨になってるけど面白い形なので残しておく
+    list./:(0)(_ + _)
+  }
+
   def foldRightで畳み込み(list: List[Int]): Int = {
     list.foldRight(0)(_ + _)
+  }
+
+  def foldRightを記号で(list: List[Int]): Int = {
+    // scalaVersion := "2.13.8"では非推奨になってるけど面白い形なので残しておく
+    list.:\(0)(_ + _)
   }
 
   // foldRightどこで使うの問題
@@ -215,6 +225,25 @@ object コレクション {
     // foldRight4回目(d ::: 初期値+a+b+c)なのでO(1) // dは要素数1のListなのでO(1)
     // このように、常に要素数が少ない可能性が高い初期値を右に置くことで、計算量を減らすことができる。
     // 一応例外としてList(List("a"), List("b","b","b"), List("c","c","c","c","c","c","c","c")のように足し合わせた結果より大きい要素数Listが後続に続く場合もある。
+  }
+
+  def scanListでアキュームレータだす(list: List[Int]): List[Int] = {
+    // 累積和かんたん！
+    list.scanLeft(0)(_ + _)
+  }
+
+  def scanRightでアキュームレータだす(list: List[Int]): List[Int] = {
+    // 計算途中の結果を出してくれる。つまり計算途中のaccumulatorの値を出してくれる。
+    list.scanRight(0)(_ + _)
+  }
+
+  def reduceLeftで畳み込み(list: List[Int]): Int = {
+    // foldLeftと同じく畳み込みだが、初期値がないので、最初の要素が初期値になる。(最初の要素を2回つかうわけではない)
+    list.reduceLeft(_ + _)
+  }
+
+  def reduceRightで畳み込み[T](list: List[List[T]]): List[T] = {
+    list.reduceRight(_ ::: _)
   }
 
   def sortWithでソート(list: List[Int]): List[Int] = {

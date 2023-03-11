@@ -210,13 +210,38 @@ class コレクションSpec extends AnyFlatSpec with Diagrams with TimeLimits {
     assert(コレクション.foldLeftで畳み込み(List(1, 2, 3, 4, 5)) === 15)
   }
 
+  "foldLeftの記号Verで" should "左から順に畳み込む" in {
+    assert(コレクション.foldLeftで畳み込み(List(1, 2, 3, 4, 5)) === 15)
+  }
+
   "foldRightで" should "右から順に畳み込む" in {
+    assert(コレクション.foldRightで畳み込み(List(1, 2, 3, 4, 5)) === 15)
+  }
+
+  "foldRightの記号Ver" should "右から順に畳み込む" in {
     assert(コレクション.foldRightで畳み込み(List(1, 2, 3, 4, 5)) === 15)
   }
 
   "foldRightで効率の良いListのflatten" should "できる" in {
     assert(コレクション.foldRightで効率の良いListのflatten(List(List("a"), List("b"), List("c"), List("d"))) === List("a", "b", "c", "d"))
     assert(コレクション.foldRightで効率の良いListのflatten(List(List("a"), List("b", "b", "b"), List("c", "c", "c", "c", "c", "c", "c", "c"))) === List("a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "c", "c"))
+  }
+
+  "scanList" should "アキュームレータだす" in {
+    assert(コレクション.scanListでアキュームレータだす(List(1, 2, 3, 4)) == List(0, 1, 3, 6, 10))
+  }
+
+  "scanRight" should "アキュームレータだす" in {
+    assert(コレクション.scanRightでアキュームレータだす(List(1, 2, 3, 4)) == List(10, 9, 7, 4, 0))
+  }
+
+  "reduceLeftで" should "左から順に畳み込む" in {
+    assert(コレクション.reduceLeftで畳み込み(List(1, 2, 3, 4, 5)) === 15)
+  }
+
+  "reduceRightで効率の良いListのflatten" should "できる" in {
+    assert(コレクション.reduceRightで畳み込み(List(List("a"), List("b"), List("c"), List("d"))) === List("a", "b", "c", "d"))
+    assert(コレクション.reduceRightで畳み込み(List(List("a"), List("b", "b", "b"), List("c", "c", "c", "c", "c", "c", "c", "c"))) === List("a", "b", "b", "b", "c", "c", "c", "c", "c", "c", "c", "c"))
   }
 
   "sortWithで" should "条件に従ってソートできる" in {
